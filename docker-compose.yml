@@ -42,7 +42,7 @@ services:
         condition: service_healthy
     working_dir: /code
     volumes:
-      - .:/code
+      - ./app:/code
 
   worker:
     build: ./app
@@ -59,7 +59,7 @@ services:
         condition: service_healthy
     working_dir: /code
     volumes:
-      - .:/code
+      - ./app:/code
 
   airflow-webserver:
     image: apache/airflow:2.9.2

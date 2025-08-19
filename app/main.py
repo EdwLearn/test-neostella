@@ -13,12 +13,12 @@ import csv
 
 
 
-from .task import add_async
+from .tasks import add_async
 from .db.session import SessionLocal, engine, Base
 from .db import models
 from .celery_app import celery
 from .schemas import OrderIn
-from .task import add_async, import_orders_async
+from .tasks import add_async, import_orders_async
 from .crud import get_orders_summary
 
 class TaskStatus(BaseModel):

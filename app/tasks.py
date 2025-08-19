@@ -61,3 +61,7 @@ def import_orders_async(rows: List[Dict]):
         
     finally:
         db.close()
+        
+@celery.task(name="app.add_async")
+def add_async(a: int, b: int) -> int:
+    return a + b
