@@ -30,6 +30,7 @@ services:
     build: ./app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /code
     environment:
+      PYTHONPATH: /code
       DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       CELERY_BROKER_URL: ${CELERY_BROKER_URL}
       CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND}
@@ -42,16 +43,16 @@ services:
         condition: service_healthy
     working_dir: /code
     volumes:
-      - ./app:/code
+      - .:/code
 
   worker:
     build: ./app
     command: celery -A app.celery_app worker -l info
     environment:
+      PYTHONPATH: /code
       DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       CELERY_BROKER_URL: ${CELERY_BROKER_URL}
       CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND}
-      PYTHONPATH: /code
     depends_on:
       postgres:
         condition: service_healthy
@@ -59,7 +60,7 @@ services:
         condition: service_healthy
     working_dir: /code
     volumes:
-      - ./app:/code
+      - .:/code
 
   airflow-webserver:
     image: apache/airflow:2.9.2

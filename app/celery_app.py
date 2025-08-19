@@ -10,5 +10,7 @@ celery = Celery(
     backend=backend,
     include = ["app.tasks"]
     )
-celery.conf.update(task_track_started=True) 
+celery.conf.update(task_track_started=True,
+                   timezone="UTC"
+                   ) 
 celery.autodiscover_tasks(["app"])
